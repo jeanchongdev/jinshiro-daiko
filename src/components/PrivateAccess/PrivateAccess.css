@@ -102,9 +102,14 @@
   box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
 }
 
-.access-button:hover {
+.access-button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 5px 30px rgba(255, 71, 87, 0.5);
+}
+
+.access-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .error-message {
@@ -114,20 +119,6 @@
   border-radius: 10px;
   border: 1px solid #ff4757;
   margin-top: 1rem;
-}
-
-.access-hint {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background: rgba(72, 52, 212, 0.2);
-  border-radius: 8px;
-  border: 1px solid #4834d4;
-}
-
-.access-hint p {
-  color: #4834d4;
-  font-size: 0.9rem;
-  margin: 0;
 }
 
 @media (max-width: 768px) {

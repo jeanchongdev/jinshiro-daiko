@@ -6,10 +6,12 @@ import MusicPlayer from "../MusicPlayer/MusicPlayer"
 import Blog from "../Blog/Blog"
 import BrokenFaces from "../BrokenFaces/BrokenFaces"
 import Statistics from "../Statistics/Statistics"
+import PasswordManager from "../PrivateAccess/PasswordManager"
 import "./MainPage.css"
 
 const MainPage = () => {
   const [activeSection, setActiveSection] = useState("home")
+  const [showPasswordManager, setShowPasswordManager] = useState(false)
 
   const renderSection = () => {
     switch (activeSection) {
@@ -39,8 +41,14 @@ const MainPage = () => {
 
   return (
     <div className="main-page">
-      <Header activeSection={activeSection} setActiveSection={setActiveSection} />
+      <Header
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        onShowPasswordManager={() => setShowPasswordManager(true)}
+      />
       <main className="main-content">{renderSection()}</main>
+
+      {showPasswordManager && <PasswordManager onClose={() => setShowPasswordManager(false)} />}
     </div>
   )
 }

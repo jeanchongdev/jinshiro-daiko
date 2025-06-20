@@ -2,36 +2,37 @@
 
 import { useState } from "react"
 import { FaLock, FaEye, FaEyeSlash } from "react-icons/fa"
+import { useAuth } from "../../context/AuthContext"
+import MainPage from "../MainPage/MainPage"
 import "./PrivateAccess.css"
 
-const PrivateAccess = ({ onAccessGranted }) => {
+const PrivateAccess = () => {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  // Hash simple para ofuscar la contraseña (no es 100% seguro pero mejor que texto plano)
-  const hashPassword = (pass) => {
-    let hash = 0
-    for (let i = 0; i < pass.length; i++) {
-      const char = pass.charCodeAt(i)
-      hash = (hash << 5) - hash + char
-      hash = hash & hash // Convertir a 32bit integer
-    }
-    return hash.toString()
-  }
+  const { currentUser, login } = useAuth()
 
-  const correctPasswordHash = "-1789986012" // Hash de "sadlife2024"
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const inputHash = hashPassword(password)
 
-    if (inputHash === correctPasswordHash) {
-      onAccessGranted()
-    } else {
-      setError("Acceso denegado. Solo el propietario puede ver esta página.")
+    try {
+      setError("")
+      setLoading(true)
+      await login(password)
+    } catch (error) {
+      console.error("Error de login:", error)
+      setError("Contraseña incorrecta. Acceso denegado.")
       setTimeout(() => setError(""), 3000)
     }
+
+    setLoading(false)
+  }
+
+  // Si el usuario está autenticado, mostrar la página principal
+  if (currentUser) {
+    return <MainPage />
   }
 
   return (
@@ -53,14 +54,20 @@ const PrivateAccess = ({ onAccessGranted }) => {
               placeholder="Contraseña de acceso"
               className="password-input"
               required
+              disabled={loading}
             />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="toggle-password">
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="toggle-password"
+              disabled={loading}
+            >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
 
-          <button type="submit" className="access-button animate-pulse">
-            Acceder
+          <button type="submit" className="access-button animate-pulse" disabled={loading}>
+            {loading ? "Verificando..." : "Acceder"}
           </button>
         </form>
 
