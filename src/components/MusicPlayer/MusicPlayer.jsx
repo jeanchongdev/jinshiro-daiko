@@ -55,6 +55,9 @@ const MusicPlayer = () => {
     audio.addEventListener("loadedmetadata", updateDuration)
     audio.addEventListener("ended", handleNext)
 
+    // Configurar volumen inicial
+    audio.volume = volume
+
     return () => {
       audio.removeEventListener("timeupdate", updateTime)
       audio.removeEventListener("loadedmetadata", updateDuration)
@@ -62,26 +65,80 @@ const MusicPlayer = () => {
     }
   }, [currentSong])
 
+  // Efecto para reproducir automáticamente cuando cambia la canción
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    // Si estaba reproduciendo, continuar reproduciendo la nueva canción
+    if (isPlaying) {
+      const playPromise = audio.play()
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log("Error al reproducir:", error)
+          setIsPlaying(false)
+        })
+      }
+    }
+  }, [currentSong])
+
   const togglePlay = () => {
     const audio = audioRef.current
     if (isPlaying) {
       audio.pause()
+      setIsPlaying(false)
     } else {
-      audio.play()
+      const playPromise = audio.play()
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true)
+          })
+          .catch((error) => {
+            console.log("Error al reproducir:", error)
+            setIsPlaying(false)
+          })
+      }
     }
-    setIsPlaying(!isPlaying)
   }
 
   const handleNext = () => {
+    const wasPlaying = isPlaying
+
     if (isShuffling) {
-      setCurrentSong(Math.floor(Math.random() * songs.length))
+      let nextSong
+      do {
+        nextSong = Math.floor(Math.random() * songs.length)
+      } while (nextSong === currentSong && songs.length > 1)
+      setCurrentSong(nextSong)
     } else {
       setCurrentSong((prev) => (prev + 1) % songs.length)
+    }
+
+    // Mantener el estado de reproducción
+    if (wasPlaying) {
+      setIsPlaying(true)
     }
   }
 
   const handlePrevious = () => {
+    const wasPlaying = isPlaying
     setCurrentSong((prev) => (prev - 1 + songs.length) % songs.length)
+
+    // Mantener el estado de reproducción
+    if (wasPlaying) {
+      setIsPlaying(true)
+    }
+  }
+
+  const handleSongSelect = (index) => {
+    const wasPlaying = isPlaying
+    setCurrentSong(index)
+
+    // Si estaba reproduciendo, continuar reproduciendo la nueva canción
+    if (wasPlaying) {
+      setIsPlaying(true)
+    }
   }
 
   const handleSeek = (e) => {
@@ -268,7 +325,7 @@ const MusicPlayer = () => {
             <div
               key={index}
               className={`playlist-item ${index === currentSong ? "active" : ""} animate-fadeIn`}
-              onClick={() => setCurrentSong(index)}
+              onClick={() => handleSongSelect(index)}
             >
               <img src={song.cover || "/placeholder.svg"} alt={song.title} className="playlist-cover" />
               <div className="playlist-info">

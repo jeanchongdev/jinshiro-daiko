@@ -12,8 +12,16 @@ const PasswordManager = ({ onClose }) => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
   const [error, setError] = useState("")
+  const [isClosing, setIsClosing] = useState(false)
 
   const { changePassword, logout } = useAuth()
+
+  const handleClose = () => {
+    setIsClosing(true)
+    setTimeout(() => {
+      onClose()
+    }, 300)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -39,7 +47,7 @@ const PasswordManager = ({ onClose }) => {
       // Cerrar sesión después de cambiar contraseña
       setTimeout(async () => {
         await logout()
-        onClose()
+        handleClose()
       }, 2000)
     } catch (error) {
       console.error("Error al cambiar contraseña:", error)
@@ -51,12 +59,12 @@ const PasswordManager = ({ onClose }) => {
 
   return (
     <div className="password-manager-overlay">
-      <div className="password-manager animate-fadeIn">
+      <div className={`password-manager ${isClosing ? "closing" : ""} animate-fadeIn`}>
         <div className="manager-header">
           <h3>
             <FaKey /> Cambiar Contraseña
           </h3>
-          <button className="close-btn" onClick={onClose}>
+          <button className="close-btn" onClick={handleClose}>
             <FaTimes />
           </button>
         </div>

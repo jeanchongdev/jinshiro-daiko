@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa"
+import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaSpinner, FaCloud } from "react-icons/fa"
+import { subscribeToBlogs, addBlogPost, updateBlogPost, deleteBlogPost } from "../../services/blogService"
 import "./Blog.css"
 
 const Blog = () => {
@@ -10,18 +11,31 @@ const Blog = () => {
   const [editingId, setEditingId] = useState(null)
   const [newPost, setNewPost] = useState({ title: "", content: "" })
   const [isClosing, setIsClosing] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null)
 
   useEffect(() => {
-    const savedPosts = localStorage.getItem("sadBlogPosts")
-    if (savedPosts) {
-      setPosts(JSON.parse(savedPosts))
+    // Suscribirse a los posts en tiempo real
+    const unsubscribe = subscribeToBlogs((postsData) => {
+      setPosts(postsData)
+      setLoading(false)
+    })
+
+    // Detectar estado de conexión
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
+
+    window.addEventListener("online", handleOnline)
+    window.addEventListener("offline", handleOffline)
+
+    return () => {
+      unsubscribe()
+      window.removeEventListener("online", handleOnline)
+      window.removeEventListener("offline", handleOffline)
     }
   }, [])
-
-  const savePosts = (updatedPosts) => {
-    localStorage.setItem("sadBlogPosts", JSON.stringify(updatedPosts))
-    setPosts(updatedPosts)
-  }
 
   const handleCloseEditor = () => {
     setIsClosing(true)
@@ -33,59 +47,103 @@ const Blog = () => {
     }, 300)
   }
 
-  const handleSavePost = () => {
+  const handleSavePost = async () => {
     if (!newPost.title.trim() || !newPost.content.trim()) return
 
-    const post = {
-      id: Date.now(),
-      title: newPost.title,
-      content: newPost.content,
-      date: new Date().toLocaleDateString("es-ES"),
-      time: new Date().toLocaleTimeString("es-ES"),
-    }
+    try {
+      setSaving(true)
 
-    const updatedPosts = [post, ...posts]
-    savePosts(updatedPosts)
-    setNewPost({ title: "", content: "" })
-    handleCloseEditor()
+      const postData = {
+        title: newPost.title.trim(),
+        content: newPost.content.trim(),
+        date: new Date().toLocaleDateString("es-ES"),
+        time: new Date().toLocaleTimeString("es-ES"),
+      }
+
+      await addBlogPost(postData)
+
+      setNewPost({ title: "", content: "" })
+      handleCloseEditor()
+    } catch (error) {
+      console.error("Error saving post:", error)
+      alert("Error al guardar el post. Inténtalo de nuevo.")
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const handleEditPost = (id) => {
-    const post = posts.find((p) => p.id === id)
+  const handleEditPost = (post) => {
     setNewPost({ title: post.title, content: post.content })
-    setEditingId(id)
+    setEditingId(post.id)
     setIsWriting(true)
   }
 
-  const handleUpdatePost = () => {
-    const updatedPosts = posts.map((post) =>
-      post.id === editingId ? { ...post, title: newPost.title, content: newPost.content } : post,
-    )
-    savePosts(updatedPosts)
-    setNewPost({ title: "", content: "" })
-    handleCloseEditor()
-    setEditingId(null)
+  const handleUpdatePost = async () => {
+    if (!newPost.title.trim() || !newPost.content.trim()) return
+
+    try {
+      setSaving(true)
+
+      const postData = {
+        title: newPost.title.trim(),
+        content: newPost.content.trim(),
+      }
+
+      await updateBlogPost(editingId, postData)
+
+      setNewPost({ title: "", content: "" })
+      handleCloseEditor()
+      setEditingId(null)
+    } catch (error) {
+      console.error("Error updating post:", error)
+      alert("Error al actualizar el post. Inténtalo de nuevo.")
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const handleDeletePost = (id) => {
-    const updatedPosts = posts.filter((post) => post.id !== id)
-    savePosts(updatedPosts)
+  const handleDeletePost = async (postId) => {
+    try {
+      await deleteBlogPost(postId)
+      setShowDeleteConfirm(null)
+    } catch (error) {
+      console.error("Error deleting post:", error)
+      alert("Error al eliminar el post. Inténtalo de nuevo.")
+    }
+  }
+
+  const formatDate = (timestamp) => {
+    if (!timestamp) return ""
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp)
+    return date.toLocaleDateString("es-ES")
+  }
+
+  const formatTime = (timestamp) => {
+    if (!timestamp) return ""
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp)
+    return date.toLocaleTimeString("es-ES")
   }
 
   return (
     <div className="blog-container animate-fadeIn">
       <div className="blog-header">
         <h2 className="blog-title animate-slideIn">Mi Diario Sad</h2>
-        <button className="new-post-btn animate-pulse" onClick={() => setIsWriting(true)}>
-          <FaPlus /> Nuevo Post
-        </button>
+        <div className="blog-controls">
+          <div className="connection-status">
+            <FaCloud className={`cloud-icon ${isOnline ? "online" : "offline"}`} />
+            <span className="status-text">{isOnline ? "En línea" : "Sin conexión"}</span>
+          </div>
+          <button className="new-post-btn animate-pulse" onClick={() => setIsWriting(true)} disabled={!isOnline}>
+            <FaPlus /> Nuevo Post
+          </button>
+        </div>
       </div>
 
       {isWriting && (
         <div className={`post-editor ${isClosing ? "closing" : ""} animate-fadeIn`}>
           <div className="editor-header">
             <h3>{editingId ? "Editando Post" : "Nuevo Post"}</h3>
-            <button className="close-editor" onClick={handleCloseEditor}>
+            <button className="close-editor" onClick={handleCloseEditor} disabled={saving}>
               <FaTimes />
             </button>
           </div>
@@ -96,6 +154,7 @@ const Blog = () => {
             value={newPost.title}
             onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
             className="post-title-input"
+            disabled={saving}
           />
 
           <textarea
@@ -104,21 +163,55 @@ const Blog = () => {
             onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
             className="post-content-input"
             rows="10"
+            disabled={saving}
           />
 
           <div className="editor-actions">
-            <button className="save-btn" onClick={editingId ? handleUpdatePost : handleSavePost}>
-              <FaSave /> {editingId ? "Actualizar" : "Guardar"}
+            <button
+              className="save-btn"
+              onClick={editingId ? handleUpdatePost : handleSavePost}
+              disabled={saving || !isOnline}
+            >
+              {saving ? <FaSpinner className="spinning" /> : <FaSave />}
+              {saving ? "Guardando..." : editingId ? "Actualizar" : "Guardar"}
             </button>
-            <button className="cancel-btn" onClick={handleCloseEditor}>
+            <button className="cancel-btn" onClick={handleCloseEditor} disabled={saving}>
               <FaTimes /> Cancelar
             </button>
           </div>
         </div>
       )}
 
+      {/* Modal de confirmación para eliminar */}
+      {showDeleteConfirm && (
+        <div className="delete-modal-overlay">
+          <div className="delete-modal animate-fadeIn">
+            <div className="modal-header">
+              <h3>Confirmar Eliminación</h3>
+            </div>
+            <div className="modal-content">
+              <p>¿Estás seguro de que quieres eliminar este post?</p>
+              <p className="warning-text">Esta acción no se puede deshacer.</p>
+            </div>
+            <div className="modal-actions">
+              <button className="confirm-delete-btn" onClick={() => handleDeletePost(showDeleteConfirm)}>
+                <FaTrash /> Eliminar
+              </button>
+              <button className="cancel-delete-btn" onClick={() => setShowDeleteConfirm(null)}>
+                <FaTimes /> Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="posts-container">
-        {posts.length === 0 ? (
+        {loading ? (
+          <div className="loading-posts animate-fadeIn">
+            <FaSpinner className="spinning" />
+            <p>Cargando pensamientos...</p>
+          </div>
+        ) : posts.length === 0 ? (
           <div className="no-posts animate-fadeIn">
             <p>Aún no has escrito ningún pensamiento...</p>
             <p>Comparte tu melancolía aquí</p>
@@ -129,16 +222,20 @@ const Blog = () => {
               <div className="post-header">
                 <h3 className="post-title">{post.title}</h3>
                 <div className="post-actions">
-                  <button className="edit-btn" onClick={() => handleEditPost(post.id)}>
+                  <button className="edit-btn" onClick={() => handleEditPost(post)} disabled={!isOnline}>
                     <FaEdit />
                   </button>
-                  <button className="delete-btn" onClick={() => handleDeletePost(post.id)}>
+                  <button className="delete-btn" onClick={() => setShowDeleteConfirm(post.id)} disabled={!isOnline}>
                     <FaTrash />
                   </button>
                 </div>
               </div>
               <div className="post-meta">
-                <span>{post.date}</span> - <span>{post.time}</span>
+                <span>{post.date || formatDate(post.createdAt)}</span> -{" "}
+                <span>{post.time || formatTime(post.createdAt)}</span>
+                {post.updatedAt && post.updatedAt !== post.createdAt && (
+                  <span className="updated-indicator"> (editado)</span>
+                )}
               </div>
               <div className="post-content">{post.content}</div>
             </div>
