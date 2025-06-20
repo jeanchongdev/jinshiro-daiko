@@ -1,0 +1,200 @@
+.broken-faces-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.faces-display {
+  margin-bottom: 4rem;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.face-container {
+  transition: all 0.5s ease;
+  transform: scale(1);
+}
+
+.face-container.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.face-container.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.face-icon-wrapper {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.face-icon {
+  font-size: 8rem;
+  filter: drop-shadow(0 0 30px currentColor);
+  position: relative;
+  z-index: 1;
+}
+
+.crack-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 120px;
+  background: #0a0a0a;
+  transform: translate(-50%, -50%) rotate(25deg);
+  box-shadow: 0 0 20px #0a0a0a;
+  z-index: 2;
+}
+
+.face-text {
+  color: #ccc;
+  font-size: 1.5rem;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(204, 204, 204, 0.3);
+}
+
+.faces-gallery {
+  margin-bottom: 4rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 2px solid #333;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-item:hover,
+.gallery-item.active {
+  border-color: #ff4757;
+  background: rgba(40, 40, 40, 0.9);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+}
+
+.gallery-item:hover .face-emoji,
+.gallery-item.active .face-emoji {
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.1);
+}
+
+.gallery-face {
+  position: relative;
+}
+
+.face-emoji {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  filter: grayscale(100%) brightness(0.7);
+  transition: all 0.3s ease;
+}
+
+.face-crack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 40px;
+  background: #0a0a0a;
+  transform: translate(-50%, -50%) rotate(15deg);
+  box-shadow: 0 0 10px #0a0a0a;
+}
+
+.melancholy-quotes {
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 20px;
+  padding: 3rem;
+  border: 2px solid #333;
+  box-shadow: 0 0 30px rgba(255, 71, 87, 0.2);
+}
+
+.quote-container blockquote {
+  color: #fff;
+  font-size: 1.5rem;
+  font-style: italic;
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.quote-container cite {
+  color: #888;
+  font-size: 1.1rem;
+  font-style: normal;
+}
+
+/* Estilos específicos para móvil */
+@media (max-width: 768px) {
+  .broken-faces-container {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .face-icon {
+    font-size: 5rem;
+  }
+
+  .face-text {
+    font-size: 1.2rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery-item {
+    padding: 1rem;
+  }
+
+  .face-emoji {
+    font-size: 2rem;
+  }
+
+  .melancholy-quotes {
+    padding: 2rem;
+  }
+
+  .quote-container blockquote {
+    font-size: 1.2rem;
+  }
+
+  /* En móvil, hacer que el efecto sea más visible al tocar */
+  .gallery-item:active {
+    border-color: #ff4757;
+    background: rgba(40, 40, 40, 0.9);
+    transform: translateY(-10px) scale(0.95);
+    box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+  }
+
+  .gallery-item:active .face-emoji {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.1);
+  }
+}

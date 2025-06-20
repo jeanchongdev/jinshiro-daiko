@@ -1,0 +1,139 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #333;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(255, 71, 87, 0.2);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.logo span {
+  font-size: 1rem;
+  color: #888;
+  display: block;
+  margin-top: -5px;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #ccc;
+  font-family: "Brush Script MT", cursive;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.2);
+  box-shadow: 0 0 15px rgba(255, 71, 87, 0.3);
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.1);
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    padding: 1rem;
+  }
+
+  .logo h2 {
+    font-size: 1.5rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #333;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .nav-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem;
+  }
+
+  .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1rem;
+    border-radius: 0;
+    border-bottom: 1px solid #333;
+  }
+}

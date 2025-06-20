@@ -1,0 +1,164 @@
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.loading-content {
+  text-align: center;
+  z-index: 2;
+}
+
+.broken-heart {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.heart-icon {
+  font-size: 4rem;
+  color: #ff4757;
+  filter: drop-shadow(0 0 20px #ff4757);
+}
+
+.crack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 60px;
+  background: #0a0a0a;
+  transform: translate(-50%, -50%) rotate(15deg);
+  box-shadow: 0 0 10px #0a0a0a;
+}
+
+.loading-title {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.loading-subtitle {
+  font-size: 1.5rem;
+  color: #888;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(136, 136, 136, 0.5);
+}
+
+.loading-bar-container {
+  width: 300px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading-bar {
+  flex: 1;
+  height: 8px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.loading-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4757, #ff6b7a);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px #ff4757;
+}
+
+.loading-percentage {
+  color: #fff;
+  font-size: 1rem;
+  min-width: 40px;
+}
+
+.loading-phrase {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+
+.lightning-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.lightning {
+  position: absolute;
+  background: linear-gradient(45deg, transparent, #4834d4, transparent);
+  opacity: 0;
+}
+
+.lightning-1 {
+  top: 20%;
+  left: 10%;
+  width: 2px;
+  height: 200px;
+  animation: lightning 2s infinite;
+  animation-delay: 0s;
+}
+
+.lightning-2 {
+  top: 60%;
+  right: 15%;
+  width: 2px;
+  height: 150px;
+  animation: lightning 2.5s infinite;
+  animation-delay: 0.8s;
+}
+
+.lightning-3 {
+  top: 40%;
+  left: 80%;
+  width: 2px;
+  height: 180px;
+  animation: lightning 3s infinite;
+  animation-delay: 1.5s;
+}
+
+@media (max-width: 768px) {
+  .loading-title {
+    font-size: 2rem;
+  }
+
+  .loading-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .loading-bar-container {
+    width: 250px;
+  }
+
+  .heart-icon {
+    font-size: 3rem;
+  }
+}
+
+@keyframes lightning {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
