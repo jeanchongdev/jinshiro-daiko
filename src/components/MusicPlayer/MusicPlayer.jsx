@@ -171,7 +171,197 @@ const MusicPlayer = () => {
 
     // Agrega más canciones aqui------------------------------------------
 
+    {
+      title: "Ozuna x Romeo Santos",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/21-Ozuna%20x%20Romeo%20Santos%20-%20El%20Farsante.mp3",
+      cover: "https://i.postimg.cc/G2CW8YKs/oie-2021833-Pq-HZoa3k.gif",
+    },
+    {
+      title: "Plan B - Es Un Secreto",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/22-Plan%20B%20-%20Es%20Un%20Secreto.mp3",
+      cover: "https://i.postimg.cc/G2CW8YKs/oie-2021833-Pq-HZoa3k.gif",
+    },
+    {
+      title: "Tu Foto",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/23-Tu%20Foto.mp3",
+      cover: "https://i.postimg.cc/G2CW8YKs/oie-2021833-Pq-HZoa3k.gif",
+    },
+    {
+      title: "El Amor Que Perdimos",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/24-Prince%20Royce%20-%20El%20Amor%20Que%20Perdimos.mp3",
+      cover: "https://i.postimg.cc/G2CW8YKs/oie-2021833-Pq-HZoa3k.gif",
+    },
+    {
+      title: "La Carretera",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/25-Prince%20Royce%20-%20La%20Carretera.mp3",
+      cover: "https://i.postimg.cc/G2CW8YKs/oie-2021833-Pq-HZoa3k.gif",
+    },
+    {
+      title: "Aventura - Enseñame A Olvidar",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/26-Aventura%20-%20Ensen%CC%83ame%20A%20Olvidar.mp3",
+      cover: "https://i.postimg.cc/G2CW8YKs/oie-2021833-Pq-HZoa3k.gif",
+    },
+    {
+      title: "BAD BUNNY - AMORFODA",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/27-BAD%20BUNNY%20-%20AMORFODA.mp3",
+      cover: "https://i.postimg.cc/G2CW8YKs/oie-2021833-Pq-HZoa3k.gif",
+    },
+    {
+      title: "Inolvidable",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/28-Beele%20&%20Ovy%20On%20The%20Drums%20-%20Inolvidable.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "BERET - OJALA",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/29-BERET%20-%20OJALA.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Yo Te Esperare",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/30-Cali%20Y%20El%20Dandee%20-%20Yo%20Te%20Esperare.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+
+    // Agrega más canciones aqui------------------------------------------
+
+    {
+      title: "El Perdedor",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/31-Enrique%20Iglesias%20-%20El%20Perdedor.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "Dile Que Tu Me Quieres",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/32-Ozuna%20-%20Dile%20Que%20Tu%20Me%20Quieres.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "Algo Me Gusta De Ti",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/33-Algo%20Me%20Gusta%20De%20Ti.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "Vuelve",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/34-Sebastian%20Yatra%20Beret%20-%20Vuelve.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Darte un Beso",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/35-Prince%20Royce%20-%20Darte%20un%20Beso.mp3",
+      cover: "https://i.postimg.cc/RhFSv272/Happy.gif",
+    },
+    {
+      title: "Llevame Contigo",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/36-Romeo%20Santos%20-%20Llevame%20Contigo.mp3",
+      cover: "https://i.postimg.cc/RhFSv272/Happy.gif",
+    },
+    {
+      title: "Donde Estan Corazon",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/37-Enrique%20Iglesias%20-%20Donde%20Estan%20Corazon.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Estoy Enamorado",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/38-Wisin%20&%20Yandel%20-%20Estoy%20Enamorado.mp3",
+      cover: "https://i.postimg.cc/RhFSv272/Happy.gif",
+    },
+    {
+      title: "No te importo",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/39-No%20te%20importo%20-%20Neztor%20MVL.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Reik - Creo en Ti",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/40-Reik%20-%20Creo%20en%20Ti.mp3",
+      cover: "https://i.postimg.cc/RhFSv272/Happy.gif",
+    },
+
+    // Agrega más canciones aqui------------------------------------------
+
+    {
+      title: "Cosculluela - La Boda",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/41-Cosculluela%20-%20La%20Boda.mp3",
+      cover: "https://i.postimg.cc/RhFSv272/Happy.gif",
+    },
+    {
+      title: "Eres Mia",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/42-Romeo%20Santos%20-%20Eres%20Mia.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "Enrique Iglesias - Bailando",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/43-Enrique%20Iglesias%20-%20Bailando.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "Por Perro",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/44-Por%20Perro.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Corazon de Seda",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/45-Ozuna%20-%20Corazon%20de%20Seda.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "Me enamore de la persona equivocada",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/46-Me%20enamore%20de%20la%20persona%20equivocada.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "La Diabla_Mi Santa",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/47-Romeo%20Santos%20-%20La%20Diabla_Mi%20Santa.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "No Tiene La Culpa",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/48-Romeo%20Santos%20-%20No%20Tiene%20La%20Culpa.mp3",
+      cover: "https://i.postimg.cc/0NWk7V6J/oie-202131776g7u-Oa.gif",
+    },
+    {
+      title: "Como Estrellas",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/49-LA%20YounG%20-%20Como%20Estrellas.mp3",
+      cover: "https://i.postimg.cc/RhFSv272/Happy.gif",
+    },
+    {
+      title: "LLORE.. POR TI",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/50-LLORE..%20POR%20TI.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+
+    // Agrega más canciones aqui------------------------------------------
+
     
+
   ]
 
   // 🎵 CARGA INICIAL: Solo al cargar la página
