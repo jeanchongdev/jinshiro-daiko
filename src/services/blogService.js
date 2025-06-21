@@ -29,13 +29,13 @@ export const subscribeToBlogs = (callback) => {
   })
 }
 
-// Agregar nuevo post
+// Agregar nuevo post (solo createdAt, NO updatedAt)
 export const addBlogPost = async (postData) => {
   try {
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
       ...postData,
       createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      // NO agregamos updatedAt aquí para posts nuevos
     })
     return docRef.id
   } catch (error) {
@@ -44,13 +44,13 @@ export const addBlogPost = async (postData) => {
   }
 }
 
-// Actualizar post existente
+// Actualizar post existente (aquí SÍ agregamos updatedAt)
 export const updateBlogPost = async (postId, postData) => {
   try {
     const postRef = doc(db, COLLECTION_NAME, postId)
     await updateDoc(postRef, {
       ...postData,
-      updatedAt: serverTimestamp(),
+      updatedAt: serverTimestamp(), // Solo aquí agregamos updatedAt
     })
   } catch (error) {
     console.error("Error updating blog post:", error)

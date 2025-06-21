@@ -70,3 +70,76 @@
     font-size: 1.1rem;
   }
 }
+
+.music-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.section-description {
+  color: #ccc;
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.music-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.info-card {
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 2px solid #333;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  border-color: #ff4757;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 71, 87, 0.2);
+}
+
+.info-card h3 {
+  color: #ff4757;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(255, 71, 87, 0.3);
+}
+
+.info-card p {
+  color: #ccc;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .music-section {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .music-info {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+}

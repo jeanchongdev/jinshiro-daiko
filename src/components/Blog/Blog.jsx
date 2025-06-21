@@ -124,6 +124,22 @@ const Blog = () => {
     return date.toLocaleTimeString("es-ES")
   }
 
+  // Función para verificar si un post fue realmente editado
+  const wasPostEdited = (post) => {
+    // Si no tiene updatedAt, definitivamente no fue editado
+    if (!post.updatedAt) return false
+
+    // Si no tiene createdAt, usar la lógica antigua
+    if (!post.createdAt) return false
+
+    // Convertir timestamps a milisegundos para comparar
+    const createdTime = post.createdAt.toDate ? post.createdAt.toDate().getTime() : new Date(post.createdAt).getTime()
+    const updatedTime = post.updatedAt.toDate ? post.updatedAt.toDate().getTime() : new Date(post.updatedAt).getTime()
+
+    // Solo mostrar "editado" si la diferencia es mayor a 1 segundo (1000ms)
+    return updatedTime - createdTime > 1000
+  }
+
   return (
     <div className="blog-container animate-fadeIn">
       <div className="blog-header">
@@ -233,9 +249,7 @@ const Blog = () => {
               <div className="post-meta">
                 <span>{post.date || formatDate(post.createdAt)}</span> -{" "}
                 <span>{post.time || formatTime(post.createdAt)}</span>
-                {post.updatedAt && post.updatedAt !== post.createdAt && (
-                  <span className="updated-indicator"> (editado)</span>
-                )}
+                {wasPostEdited(post) && <span className="updated-indicator"> (editado)</span>}
               </div>
               <div className="post-content">{post.content}</div>
             </div>

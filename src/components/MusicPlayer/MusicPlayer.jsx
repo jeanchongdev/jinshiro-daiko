@@ -18,31 +18,278 @@ const MusicPlayer = () => {
   })
   const [isDragging, setIsDragging] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true) // 🎵 NUEVO: Para distinguir carga inicial
 
   const audioRef = useRef(null)
   const playerRef = useRef(null)
+  const musicTimerRef = useRef(null)
 
   // Lista de canciones sad (URLs de ejemplo - reemplazar con tus archivos)
   const songs = [
     {
       title: "You Can Be King Again",
       artist: "Jinshirō Daikō",
-      src: "/audio/you.mp3", // Reemplazar con tu archivo
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/you.mp3",
       cover: "https://i.postimg.cc/Y9QT7s35/J.png",
     },
     {
       title: "XXXTENTACION - numb",
       artist: "Jinshirō Daikō",
-      src: "/audio/numb.mp3", // Reemplazar con tu archivo
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/numb.mp3",
       cover: "https://i.postimg.cc/Y9QT7s35/J.png",
     },
     {
       title: "Coyote Theory - This Side of Paradise",
       artist: "Jinshirō Daikō",
-      src: "/audio/coyote.mp3", // Reemplazar con tu archivo
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/coyote.mp3",
       cover: "https://i.postimg.cc/Y9QT7s35/J.png",
     },
+    // Agrega más canciones aqui------------------------------------------
+    {
+      title: "everything works out in the end",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/1-everything%20works%20out%20in%20the%20end.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Lonely - Akon",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/2-Lonely%20-%20Akon.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Until I Found You",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/3-Until%20I%20Found%20You.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Yung kai - blue",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/4-yung%20kai%20-%20blue.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "In the back of my mind",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/5-in%20the%20back%20of%20my%20mind.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Fasetya - Someone To You",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/6-Fasetya%20-%20Someone%20To%20You.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Conan Gray - Heather",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/7-Conan%20Gray%20-%20Heather.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "DIE WITH A SMILE",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/8-DIE%20WITH%20A%20SMILE.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "Blackbear",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/9-Blackbear.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+    {
+      title: "YouTube",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/10-YouTube.mp3",
+      cover: "https://i.postimg.cc/Dwh3rGfx/chibi-yhad.gif",
+    },
+
+    // Agrega más canciones aqui------------------------------------------
+
+    {
+      title: "Billie Eilish",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/11-Billie%20Eilish.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Here With Me",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/12-d4vd%20-%20Here%20With%20Me.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Christina perri",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/13-christina%20perri%20-%20a%20thousand%20years.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "This is how it feels",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/14-d4vd%20-%20this%20is%20how%20it%20feels.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "You look lonely",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/15-you%20look%20lonely%20i%20can%20fix%20that.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Cry - Cigarettes after sex",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/16-Cry%20-%20Cigarettes%20after%20sex.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Sapientdream - Pastlives",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/17-sapientdream%20-%20Pastlives.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Cardigan - Taylor Swift",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/18-Cardigan%20-%20Taylor%20Swift.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Harry Styles - As It Was",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/19-Harry%20Styles%20-%20As%20It%20Was.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+    {
+      title: "Ozuna - Te Vas",
+      artist: "Jinshirō Daikō",
+      src: "https://github.com/ryuseishouda/audio/raw/refs/heads/main/20-Ozuna%20-%20Te%20Vas.mp3",
+      cover: "https://i.postimg.cc/zB69VbPS/cry-menhera.gif",
+    },
+
+    // Agrega más canciones aqui------------------------------------------
+
+    
   ]
+
+  // 🎵 CARGA INICIAL: Solo al cargar la página
+  useEffect(() => {
+    const savedPlayerState = localStorage.getItem("sadMusicPlayerState")
+    if (savedPlayerState) {
+      const playerState = JSON.parse(savedPlayerState)
+      setCurrentSong(playerState.currentSong || 0)
+      setVolume(playerState.volume || 0.7)
+      setIsShuffling(playerState.isShuffling || false)
+      setIsRepeating(playerState.isRepeating || false)
+      setPosition(
+        playerState.position || {
+          x: window.innerWidth / 2 - 200,
+          y: window.innerHeight / 2 - 200,
+        },
+      )
+      setIsMinimized(playerState.isMinimized || false)
+    }
+  }, [])
+
+  // 🎵 RESTAURAR TIEMPO: Solo en la carga inicial
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    const handleLoadedData = () => {
+      // Solo restaurar tiempo si es la carga inicial de la página
+      if (isInitialLoad) {
+        const savedPlayerState = localStorage.getItem("sadMusicPlayerState")
+        if (savedPlayerState) {
+          const playerState = JSON.parse(savedPlayerState)
+
+          // Restaurar tiempo de reproducción solo si es la misma canción
+          if (playerState.currentTime && playerState.currentTime > 0 && playerState.currentSong === currentSong) {
+            audio.currentTime = playerState.currentTime
+            setCurrentTime(playerState.currentTime)
+            console.log("🔄 Restaurando desde:", formatTime(playerState.currentTime))
+          }
+
+          // Restaurar estado de reproducción
+          if (playerState.wasPlaying) {
+            const playPromise = audio.play()
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => {
+                  setIsPlaying(true)
+                  console.log("▶️ Música restaurada y reproduciendo")
+                })
+                .catch((error) => {
+                  console.log("Error al restaurar reproducción:", error)
+                  setIsPlaying(false)
+                })
+            }
+          }
+        }
+        // Marcar que ya no es carga inicial
+        setIsInitialLoad(false)
+      } else {
+        // Si no es carga inicial (cambio de canción), empezar desde 0
+        audio.currentTime = 0
+        setCurrentTime(0)
+        console.log("🎵 Nueva canción, empezando desde 0")
+      }
+    }
+
+    audio.addEventListener("loadeddata", handleLoadedData)
+
+    return () => {
+      audio.removeEventListener("loadeddata", handleLoadedData)
+    }
+  }, [currentSong, isInitialLoad])
+
+  // 🎵 GUARDAR ESTADO: Cada 2 segundos
+  useEffect(() => {
+    const saveInterval = setInterval(() => {
+      const playerState = {
+        currentSong,
+        currentTime: audioRef.current?.currentTime || 0,
+        wasPlaying: isPlaying,
+        volume,
+        isShuffling,
+        isRepeating,
+        position,
+        isMinimized,
+        lastSaved: Date.now(),
+      }
+
+      localStorage.setItem("sadMusicPlayerState", JSON.stringify(playerState))
+    }, 2000)
+
+    return () => clearInterval(saveInterval)
+  }, [currentSong, isPlaying, volume, isShuffling, isRepeating, position, isMinimized])
+
+  // 🎵 GUARDAR AL CERRAR: Antes de cerrar la página
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      const playerState = {
+        currentSong,
+        currentTime: audioRef.current?.currentTime || 0,
+        wasPlaying: isPlaying,
+        volume,
+        isShuffling,
+        isRepeating,
+        position,
+        isMinimized,
+        lastSaved: Date.now(),
+      }
+
+      localStorage.setItem("sadMusicPlayerState", JSON.stringify(playerState))
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+    }
+  }, [currentSong, isPlaying, volume, isShuffling, isRepeating, position, isMinimized])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -55,7 +302,7 @@ const MusicPlayer = () => {
     audio.addEventListener("loadedmetadata", updateDuration)
     audio.addEventListener("ended", handleNext)
 
-    // Configurar volumen inicial
+    // Configurar volumen desde el estado
     audio.volume = volume
 
     return () => {
@@ -63,12 +310,51 @@ const MusicPlayer = () => {
       audio.removeEventListener("loadedmetadata", updateDuration)
       audio.removeEventListener("ended", handleNext)
     }
-  }, [currentSong])
+  }, [currentSong, volume])
 
-  // Efecto para reproducir automáticamente cuando cambia la canción
+  // 🎵 CONTADOR DE MÚSICA: Para estadísticas
+  useEffect(() => {
+    if (musicTimerRef.current) {
+      clearInterval(musicTimerRef.current)
+      musicTimerRef.current = null
+    }
+
+    if (isPlaying) {
+      console.log("🎵 Iniciando contador de música")
+      musicTimerRef.current = setInterval(() => {
+        const event = new CustomEvent("musicPlaying", {
+          detail: {
+            isPlaying: true,
+            currentTime: audioRef.current?.currentTime || 0,
+            song: songs[currentSong]?.title || "Unknown",
+          },
+        })
+        window.dispatchEvent(event)
+      }, 1000)
+    } else {
+      console.log("⏸️ Pausando contador de música")
+    }
+
+    return () => {
+      if (musicTimerRef.current) {
+        clearInterval(musicTimerRef.current)
+        musicTimerRef.current = null
+      }
+    }
+  }, [isPlaying, currentSong])
+
+  useEffect(() => {
+    return () => {
+      if (musicTimerRef.current) {
+        clearInterval(musicTimerRef.current)
+      }
+    }
+  }, [])
+
+  // 🎵 AUTO-REPRODUCIR: Solo si estaba reproduciendo antes del cambio
   useEffect(() => {
     const audio = audioRef.current
-    if (!audio) return
+    if (!audio || isInitialLoad) return
 
     // Si estaba reproduciendo, continuar reproduciendo la nueva canción
     if (isPlaying) {
@@ -87,12 +373,14 @@ const MusicPlayer = () => {
     if (isPlaying) {
       audio.pause()
       setIsPlaying(false)
+      console.log("⏸️ Música pausada")
     } else {
       const playPromise = audio.play()
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
             setIsPlaying(true)
+            console.log("▶️ Música reproduciendo")
           })
           .catch((error) => {
             console.log("Error al reproducir:", error)
@@ -102,6 +390,7 @@ const MusicPlayer = () => {
     }
   }
 
+  // 🎵 SIGUIENTE CANCIÓN: Cambio normal, empezar desde 0
   const handleNext = () => {
     const wasPlaying = isPlaying
 
@@ -119,8 +408,11 @@ const MusicPlayer = () => {
     if (wasPlaying) {
       setIsPlaying(true)
     }
+
+    console.log("⏭️ Cambiando a siguiente canción")
   }
 
+  // 🎵 CANCIÓN ANTERIOR: Cambio normal, empezar desde 0
   const handlePrevious = () => {
     const wasPlaying = isPlaying
     setCurrentSong((prev) => (prev - 1 + songs.length) % songs.length)
@@ -129,8 +421,11 @@ const MusicPlayer = () => {
     if (wasPlaying) {
       setIsPlaying(true)
     }
+
+    console.log("⏮️ Cambiando a canción anterior")
   }
 
+  // 🎵 SELECCIONAR CANCIÓN: Cambio manual, empezar desde 0
   const handleSongSelect = (index) => {
     const wasPlaying = isPlaying
     setCurrentSong(index)
@@ -139,6 +434,8 @@ const MusicPlayer = () => {
     if (wasPlaying) {
       setIsPlaying(true)
     }
+
+    console.log("🎯 Canción seleccionada:", songs[index].title)
   }
 
   const handleSeek = (e) => {
@@ -149,7 +446,7 @@ const MusicPlayer = () => {
   }
 
   const handleVolumeChange = (e) => {
-    e.stopPropagation() // Prevenir que se mueva el reproductor
+    e.stopPropagation()
     const newVolume = e.target.value
     setVolume(newVolume)
     audioRef.current.volume = newVolume
@@ -162,7 +459,6 @@ const MusicPlayer = () => {
   }
 
   const handleMouseDown = (e) => {
-    // Prevenir drag si se hace clic en controles interactivos
     if (
       e.target.closest(".player-controls") ||
       e.target.closest(".volume-container") ||
@@ -195,9 +491,7 @@ const MusicPlayer = () => {
     document.addEventListener("mouseup", handleMouseUp)
   }
 
-  // Eventos touch para móvil
   const handleTouchStart = (e) => {
-    // Prevenir drag si se toca en controles interactivos
     if (
       e.target.closest(".player-controls") ||
       e.target.closest(".volume-container") ||
@@ -313,6 +607,12 @@ const MusicPlayer = () => {
                 onTouchStart={(e) => e.stopPropagation()}
                 className="volume-slider"
               />
+            </div>
+
+            {/* Estado del reproductor */}
+            <div style={{ fontSize: "0.7rem", color: "#666", textAlign: "center", marginTop: "0.5rem" }}>
+              {isPlaying ? "🎵 Reproduciendo..." : "⏸️ Pausado"}
+              {isInitialLoad && <div style={{ color: "#4834d4" }}>🔄 Cargando...</div>}
             </div>
           </>
         )}

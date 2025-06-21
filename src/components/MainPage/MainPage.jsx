@@ -16,7 +16,29 @@ const MainPage = () => {
   const renderSection = () => {
     switch (activeSection) {
       case "music":
-        return <MusicPlayer />
+        return (
+          <div className="music-section animate-fadeIn">
+            <h2 className="section-title animate-slideIn">Música Sad</h2>
+            <p className="section-description">
+              Usa el reproductor flotante para controlar tu música melancólica. Puedes arrastrarlo y minimizarlo
+              mientras navegas por otras secciones.
+            </p>
+            <div className="music-info">
+              <div className="info-card">
+                <h3>🎵 Controles</h3>
+                <p>El reproductor flotante te permite controlar la música desde cualquier sección</p>
+              </div>
+              <div className="info-card">
+                <h3>📱 Móvil</h3>
+                <p>En dispositivos móviles, puedes tocar y arrastrar el reproductor</p>
+              </div>
+              <div className="info-card">
+                <h3>🔄 Funciones</h3>
+                <p>Aleatorio, repetir, control de volumen y más</p>
+              </div>
+            </div>
+          </div>
+        )
       case "blog":
         return <Blog />
       case "faces":
@@ -47,6 +69,8 @@ const MainPage = () => {
         onShowPasswordManager={() => setShowPasswordManager(true)}
       />
       <main className="main-content">{renderSection()}</main>
+      {/* Reproductor de música global - siempre visible */}
+      <MusicPlayer />
 
       {showPasswordManager && <PasswordManager onClose={() => setShowPasswordManager(false)} />}
     </div>
